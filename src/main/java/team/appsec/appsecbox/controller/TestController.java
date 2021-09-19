@@ -8,6 +8,7 @@ import team.appsec.appsecbox.domain.application.TechnicalComponent;
 import team.appsec.appsecbox.domain.assessment.Assessment;
 import team.appsec.appsecbox.service.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +24,11 @@ public class TestController {
     Application createApplication(@RequestBody String name) {
         Application app = applicationService.createNewApplication(name);
         return app;
+    }
+
+    @GetMapping("/api/application")
+    Set<Application> getApplications() {
+        return applicationService.getApplications();
     }
 
     @PostMapping("/api/application/{applicationId}/component")

@@ -30,6 +30,11 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    public Set<Application> getApplications() {
+        return applicationRepository.findAll().stream().collect(Collectors.toSet());
+    }
+
+    @Override
     public Application getApplicationById(UUID id) {
         return applicationRepository.findById(id).orElseThrow(ApplicationNotFoundException::new);
     }

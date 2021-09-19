@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class LocalDockerControlServiceImpl implements ControlService {
+public class LocalDockerControlService implements ControlService {
 
     private final JobRepository jobRepository;
 
@@ -36,12 +36,13 @@ public class LocalDockerControlServiceImpl implements ControlService {
 
     @Override
     public Set<Issue> getIssues(UUID jobId) {
-        return jobRepository.getById(jobId).getIssues();
+        Job job = jobRepository.findById(jobId).orElseThrow(JobNotFoundException::new);
+        return job.getIssues();
     }
 
     @Override
     public void stopJob(UUID jobId) {
-        Job job = jobRepository.getById(jobId);
+        Job job = jobRepository.findById(jobId).orElseThrow(JobNotFoundException::new);
         job.setState(Job.State.STOPPED);
         jobRepository.save( job );
     }
