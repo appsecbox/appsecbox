@@ -31,6 +31,11 @@ public class TestController {
         return applicationService.getApplications();
     }
 
+    @GetMapping("/api/application/{id}")
+    Application getApplicationById(@PathVariable(name = "id") UUID applicationId) {
+        return applicationService.getApplicationById(applicationId);
+    }
+
     @PostMapping("/api/application/{applicationId}/component")
     Application createComponent(@RequestBody String name,
                                 @PathVariable(name = "applicationId") UUID applicationId) {
@@ -38,6 +43,12 @@ public class TestController {
         Application app = applicationService.getApplicationById(applicationId);
         applicationService.addComponentToApplication(app.getId(), component.getId());
         return applicationService.getApplicationById(app.getId());
+    }
+
+    @PostMapping("/api/application/{applicationId}/meta")
+    void createApplicationMeta(@RequestBody CreateApplicationMetaRequest request,
+                                @PathVariable(name = "applicationId") UUID applicationId) {
+        applicationService.addMetaToApplication(applicationId, request.key, request.value);
     }
 
     @PostMapping("/api/application/{applicationId}/component/{componentId}/technical-component")

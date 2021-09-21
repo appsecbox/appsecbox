@@ -1,21 +1,54 @@
 import {useEffect, useState} from "react";
 import Bage from "./Bage";
+import {DataGrid} from "@mui/x-data-grid"
 
+/**
+ *
+ * @param props = data (array of data) or getDataPromise (promise returning array of data), type
+ */
 const ItemsList = (props) => {
     const [data, setData] = useState(null)
 
     useEffect(() => {
-        if (!data) {
-            props.getDataHandle.then((response) => (setData(response)))
+        if (props.getDataPromise!=null) {
+            if (!data) {
+                props.getDataPromise.then((response) => (setData(response)))
+            }
+        } else {
+            setData( props.data )
         }
-    }, [data])
+    }, [data,props.getDataPromise, props.data])
 
-    if(data!=null) {
+    if (data != null) {
+
+        const columns = []
+        const rows = []
+
+        if (data.length > 0) {
+            let firstRow = data[0]
+
+            Object.keys(firstRow).forEach(function (k) {
+                if (k === "id") {
+                } else if (k === "name") {
+                    columns.push({
+                        field: k, headerName: k, flex: 300, renderCell: (params) => {
+                            return <Bage id={params.row.id} type={props.type} name={params.row.name}></Bage>
+                        }
+                    })
+                } else {
+                    columns.push({field: k, headerName: k, flex: 300})
+                }
+            });
+        }
+
+        data.forEach((item) => {
+            rows.push(item)
+        })
+
         return (
-            <div>
-                {data.map( (d) => {
-                    return ( <Bage key={d.id} type={"application"} id={d.id} name={d.name}></Bage> )
-                } )}
+            <div style={{height: 500, width: '100%'}}>
+                <DataGrid rows={rows} columns={columns} pageSize={50}>
+                </DataGrid>
             </div>
         )
     } else {

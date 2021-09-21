@@ -40,6 +40,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    public void addMetaToApplication(UUID applicationId, String key, String value) {
+        Application application = applicationRepository.findById(applicationId).orElseThrow(ApplicationNotFoundException::new);
+        Map<String,String> meta = application.getMeta();
+        meta.put(key,value);
+        application.setMeta(meta);
+        applicationRepository.save(application);
+    }
+
+    @Override
     public void addComponentToApplication(UUID applicationId, UUID componentId) {
         Application application = getApplicationById(applicationId);
         Component component = componentService.getComponentById(componentId);

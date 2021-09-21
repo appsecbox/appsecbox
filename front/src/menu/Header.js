@@ -1,14 +1,24 @@
 import {Link} from "react-router-dom";
-import {Box, Button, Menu, Paper} from "@material-ui/core";
+import {Box, Button, Paper} from "@material-ui/core";
+import AppsIcon from '@mui/icons-material/Apps';
+import InsertChart from '@mui/icons-material/InsertChart';
 
 const Header = () => (
     <Paper elevation={1} square >
         <Box p={6} m={0}>
             <Button>
-                <Link to={"/dashboard"}>Dashboard</Link>
+                <Link to={"/dashboard"}>
+                    <InsertChart fontSize={"large"}></InsertChart>
+                    <br />
+                    Dashboard
+                </Link>
             </Button>
             <Button>
-                <Link to={"/application"}>Applications</Link>
+                <Link to={"/application"}>
+                    <AppsIcon fontSize={"large"}></AppsIcon>
+                    <br />
+                    Applications
+                </Link>
             </Button>
         </Box>
     </Paper>

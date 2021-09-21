@@ -2,20 +2,20 @@ import {useState} from "react";
 import {Button, TextField} from "@material-ui/core";
 import Api from "../api/Api";
 
-const ApplicationForm = (props) => {
+const ComponentForm = (props) => {
     const [name, setName] = useState('')
 
     return (
         <div>
-            <TextField id="standard-basic" label="App's name" variant="standard"
+            <TextField id="standard-basic" label="Component's name" variant="standard"
                        onChange={(event) => setName(event.target.value)} value={name}/>
             <Button
                 variant={"contained"}
-                onClick={() => Api.createApplication(name).then(() => (window.location.reload()))}>
-                Add new application
+                onClick={() => Api.createComponent(props.applicationId,name).then(() => (window.location.reload()))}>
+                Add new Component
             </Button>
         </div>
     )
 }
 
-export default ApplicationForm
+export default ComponentForm
