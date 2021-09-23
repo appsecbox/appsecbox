@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import Api from "../api/Api";
 import ComponentForm from "./ComponentForm";
-import {Card, CardContent, Grid} from "@mui/material";
+import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
 import ItemsList from "../ui/ItemsList";
 import MetaForm from "../ui/MetaForm";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Breadcrumbs, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import UseCaseForm from "../application/UseCaseForm"
+import BadgeList from "../ui/BadgeList";
 
 const ApplicationPage = (props) => {
     const [application, setApplication] = useState(null)
@@ -33,29 +34,51 @@ const ApplicationPage = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={6}>
                     <Card>
+                        <CardHeader title={"General"} />
                         <CardContent>
-                            ID: {id}
+                            ID: {id} <br/>
+                            Name: {application.name} <br/>
+                            Number of components: {application.components.length}<br/>
+                            Number of use-cases: {application.useCases.length}
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid item xs={6}>
                     <Card>
+                        <CardHeader title={"Meta"} />
                         <CardContent>
-                            Meta:
                             {meta.map((s) => {
                                 return <div key={s.key}>{s.key} = {s.value} <DeleteForeverIcon color={"primary"} fontSize={"small"}></DeleteForeverIcon></div>
                             })}
-                            <MetaForm applicationId={id}></MetaForm>
                         </CardContent>
+                        <CardActions>
+                            <MetaForm applicationId={id}></MetaForm>
+                        </CardActions>
                     </Card>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <ComponentForm applicationId={id}></ComponentForm>
+                <Grid item xs={6} mt={5}>
+                    <Card>
+                        <CardHeader title={"Components"} />
+                        <CardContent>
+                            <BadgeList mapKey={"id"} mapValue={"name"} type={"application/" + id + "/component"} data={application.components}></BadgeList>
+                        </CardContent>
+                        <CardActions>
+                            <ComponentForm applicationId={id}></ComponentForm>
+                        </CardActions>
+                    </Card>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <ItemsList header={"Components"} type={"application/" + id + "/component"} data={application.components}></ItemsList>
+                <Grid item xs={6} mt={5}>
+                    <Card>
+                        <CardHeader title={"Use-Cases"} />
+                        <CardContent>
+                            <BadgeList mapKey={"id"} mapValue={"name"} type={"application/" + id + "/use-case"} data={application.useCases}></BadgeList>
+                        </CardContent>
+                        <CardActions>
+                            <UseCaseForm components={application.components} applicationId={id}></UseCaseForm>
+                        </CardActions>
+                    </Card>
                 </Grid>
 
             </Grid>

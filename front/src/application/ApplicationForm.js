@@ -7,7 +7,7 @@ const ApplicationForm = (props) => {
 
     return (
         <div>
-            <TextField id="standard-basic" label="App's name" variant="standard"
+            <TextField label="App's name" variant="standard"
                        onChange={(event) => setName(event.target.value)} value={name}/>
             <Button
                 variant={"contained"}

@@ -118,7 +118,7 @@ create table usecases
     name varchar(128),
     actor varchar(128),
     action varchar(1024),
-    application_id uuid not null,
+    application_id uuid,
     primary key (id)
 );
 create table usecases_components

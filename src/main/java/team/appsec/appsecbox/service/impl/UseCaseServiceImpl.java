@@ -22,14 +22,13 @@ public class UseCaseServiceImpl implements UseCaseService {
     public UseCase createUseCase(String name, String actor, String action, Set<UUID> componentsIds) {
         Set<Component> components = componentService.getComponentsByIds(componentsIds);
 
-        useCaseRepository.save(UseCase.builder()
+        return useCaseRepository.save(UseCase.builder()
                 .id(UUID.randomUUID())
                 .name(name)
                 .action(action)
                 .actor(actor)
                 .components(components)
                 .build());
-        return null;
     }
 
     @Override

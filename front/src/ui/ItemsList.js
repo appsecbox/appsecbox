@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import Bage from "./Bage";
+import Badge from "./Badge";
 import {DataGrid} from "@mui/x-data-grid"
 
 /**
@@ -10,10 +10,8 @@ const ItemsList = (props) => {
     const [data, setData] = useState(null)
 
     useEffect(() => {
-        if (props.getDataPromise != null) {
-            if (!data) {
+        if (props.getDataPromise) {
                 props.getDataPromise.then((response) => (setData(response)))
-            }
         } else {
             setData(props.data)
         }
@@ -37,7 +35,7 @@ const ItemsList = (props) => {
                     } else if (k === "name") {
                         columns.push({
                             field: k, headerName: k, flex: 300, renderCell: (params) => {
-                                return <Bage id={params.row.id} type={props.type} name={params.row.name}></Bage>
+                                return <Badge id={params.row.id} type={props.type} name={params.row.name}></Badge>
                             }
                         })
                     } else {

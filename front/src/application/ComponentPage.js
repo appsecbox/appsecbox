@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
 import Api from "../api/Api";
 import TechnicalComponentForm from "../application/TechnicalComponentForm"
-import {Card, CardContent, Grid} from "@mui/material";
+import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
 import ItemsList from "../ui/ItemsList";
 import MetaForm from "../ui/MetaForm";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Breadcrumbs, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import BadgeList from "../ui/BadgeList";
+import ComponentForm from "./ComponentForm";
 
 const ComponentPage = (props) => {
     const [application, setApplication] = useState(null)
@@ -42,29 +44,40 @@ const ComponentPage = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={6}>
                     <Card>
+                        <CardHeader title={"General"} />
                         <CardContent>
-                            ID: {componentId}
+                            ID: {componentId} <br/>
+                            Name: {component.name} <br/>
+                            Application: {application.name} <br/>
+                            Number of technical components: {component.technicalComponents.length}<br/>
+                            Number of datasets: {component.datasets.length}
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid item xs={6}>
                     <Card>
+                        <CardHeader title={"Meta"} />
                         <CardContent>
-                            Meta:
                             {meta.map((s) => {
                                 return <div key={s.key}>{s.key} = {s.value} <DeleteForeverIcon color={"primary"} fontSize={"small"}></DeleteForeverIcon></div>
                             })}
-                            <MetaForm applicationId={applicationId} componentId={componentId}></MetaForm>
                         </CardContent>
+                        <CardActions>
+                            <MetaForm applicationId={applicationId} componentId={componentId}></MetaForm>
+                        </CardActions>
                     </Card>
                 </Grid>
 
                 <Grid item xs={12}>
-                    <TechnicalComponentForm applicationId={applicationId} componentId={componentId}></TechnicalComponentForm>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <ItemsList header={"Technical Components"} type={"application/" + applicationId + "/component/"+componentId+"/technical-component"} data={component.technicalComponents}></ItemsList>
+                    <Card>
+                        <CardHeader title={"Technical components"} />
+                        <CardContent>
+                            <BadgeList mapKey={"id"} mapValue={"uri"} type={"application/" + applicationId + "/component/"+componentId+"/technical-component"} data={component.technicalComponents}></BadgeList>
+                        </CardContent>
+                        <CardActions>
+                            <TechnicalComponentForm applicationId={applicationId} componentId={componentId}></TechnicalComponentForm>
+                        </CardActions>
+                    </Card>
                 </Grid>
 
             </Grid>

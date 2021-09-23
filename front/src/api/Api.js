@@ -63,6 +63,11 @@ class Api {
         return this.request("POST", "/api/application/"+applicationId+"/component/"+componentId+"/technical-component/"+technicalComponentId, JSON.stringify(request))
     }
 
+    static async createUseCase(applicationId,name,actor,action,componentsIds){
+        let request = {name:name, actor:actor, action:action, componentsIds:componentsIds}
+        return this.request("POST", "/api/application/"+applicationId+"/use-case", JSON.stringify(request))
+    }
+
 
 }
 

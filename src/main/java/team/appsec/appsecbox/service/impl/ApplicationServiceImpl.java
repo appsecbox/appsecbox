@@ -68,6 +68,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         if( useCase==null){
             useCases = new HashSet<>();
         }
+        useCases.add(useCase);
         application.setUseCases(useCases);
         applicationRepository.save(application);
     }
