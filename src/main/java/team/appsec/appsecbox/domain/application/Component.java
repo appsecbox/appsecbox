@@ -24,6 +24,16 @@ public class Component {
     @BatchSize(size = 10)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
+            name = "components_datasets",
+            joinColumns = {@JoinColumn(name = "component_id")},
+            inverseJoinColumns = {@JoinColumn(name = "dataset_id")}
+    )
+    private Set<Dataset> datasets;
+
+    @ToString.Exclude
+    @BatchSize(size = 10)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
             name = "components_technical_components",
             joinColumns = {@JoinColumn(name = "component_id")},
             inverseJoinColumns = {@JoinColumn(name = "technical_component_id")}

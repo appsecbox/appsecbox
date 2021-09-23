@@ -7,6 +7,8 @@ import team.appsec.appsecbox.domain.assessment.Control;
 import team.appsec.appsecbox.repository.TechnicalComponentRepository;
 import team.appsec.appsecbox.service.TechnicalComponentService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -29,6 +31,18 @@ public class TechnicalComponentServiceImpl implements TechnicalComponentService 
     @Override
     public TechnicalComponent getTechnicalComponentById(UUID technicalComponentId) {
         return technicalComponentRepository.findById(technicalComponentId).orElseThrow(TechnicalComponentNotFoundException::new);
+    }
+
+    @Override
+    public void addMetaToTechnicalComponent(UUID technicalComponentId, String key, String value) {
+        TechnicalComponent technicalComponent = getTechnicalComponentById(technicalComponentId);
+        Map<String,String> meta = technicalComponent.getMeta();
+        if(meta==null){
+            meta = new HashMap<>();
+        }
+        meta.put(key,value);
+        technicalComponent.setMeta(meta);
+        technicalComponentRepository.save(technicalComponent);
     }
 
     @Override

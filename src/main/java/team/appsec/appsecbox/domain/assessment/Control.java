@@ -28,7 +28,7 @@ public class Control {
         SOURCE_CODE,
         ARTIFACT,
         SERVER,
-        INFRASTRUCTURE
+        CONFIG
     }
 
     public enum State{

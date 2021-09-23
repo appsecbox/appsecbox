@@ -17,6 +17,9 @@ public class Application {
     private UUID id;
     private String name;
 
+    @OneToOne(mappedBy = "application")
+    private Architecture architecture;
+
     @ToString.Exclude
     @BatchSize(size = 10)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
@@ -26,6 +29,10 @@ public class Application {
             inverseJoinColumns = {@JoinColumn(name = "component_id")}
     )
     private Set<Component> components;
+
+    @OneToMany
+    @JoinColumn(name = "application_id")
+    private Set<UseCase> useCases;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "key")

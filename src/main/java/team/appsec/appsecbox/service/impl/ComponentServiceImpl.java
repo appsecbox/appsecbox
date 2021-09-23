@@ -34,6 +34,11 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
+    public Set<Component> getComponentsByIds(Set<UUID> componentsIds) {
+        return componentRepository.findAllById(componentsIds).stream().collect(Collectors.toSet());
+    }
+
+    @Override
     public void addTechnicalComponentToComponent(UUID componentId, UUID technicalComponentId) {
         Component component = getComponentById(componentId);
         TechnicalComponent technicalComponent = technicalComponentService.getTechnicalComponentById(technicalComponentId);
@@ -43,6 +48,23 @@ public class ComponentServiceImpl implements ComponentService {
         }
         technicalComponents.add(technicalComponent);
         component.setTechnicalComponents(technicalComponents);
+        componentRepository.save(component);
+    }
+
+    @Override
+    public void addDatasetToComponent(UUID componentId, UUID datasetId) {
+
+    }
+
+    @Override
+    public void addMetaToComponent(UUID componentId, String key, String value) {
+        Component component = getComponentById(componentId);
+        Map<String,String> meta = component.getMeta();
+        if(meta==null){
+            meta = new HashMap<>();
+        }
+        meta.put(key,value);
+        component.setMeta(meta);
         componentRepository.save(component);
     }
 

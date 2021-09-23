@@ -3,10 +3,14 @@ package team.appsec.appsecbox.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import team.appsec.appsecbox.domain.application.Application;
+import team.appsec.appsecbox.domain.application.Architecture;
 import team.appsec.appsecbox.domain.application.Component;
+import team.appsec.appsecbox.domain.application.UseCase;
 import team.appsec.appsecbox.repository.ApplicationRepository;
+import team.appsec.appsecbox.repository.ArchitectureRepository;
 import team.appsec.appsecbox.service.ApplicationService;
 import team.appsec.appsecbox.service.ComponentService;
+import team.appsec.appsecbox.service.UseCaseService;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -17,16 +21,24 @@ import java.util.stream.Collectors;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final ArchitectureRepository architectureRepository;
     private final ComponentService componentService;
+    private final UseCaseService useCaseService;
 
     @Transactional
     @Override
     public Application createNewApplication(String name) {
-        return applicationRepository.save(
+        Application application = applicationRepository.save(
                 Application.builder()
                         .id(UUID.randomUUID())
                         .name(name)
                         .build());
+        Architecture architecture = Architecture.builder()
+                .id(UUID.randomUUID())
+                .application(application)
+                .build();
+        architectureRepository.save(architecture);
+        return getApplicationById(application.getId());
     }
 
     @Override
@@ -45,6 +57,18 @@ public class ApplicationServiceImpl implements ApplicationService {
         Map<String,String> meta = application.getMeta();
         meta.put(key,value);
         application.setMeta(meta);
+        applicationRepository.save(application);
+    }
+
+    @Override
+    public void addUseCaseToApplication(UUID applicationId, UUID useCaseId) {
+        Application application = applicationRepository.findById(applicationId).orElseThrow(ApplicationNotFoundException::new);
+        UseCase useCase = useCaseService.getById(useCaseId);
+        Set<UseCase> useCases = application.getUseCases();
+        if( useCase==null){
+            useCases = new HashSet<>();
+        }
+        application.setUseCases(useCases);
         applicationRepository.save(application);
     }
 

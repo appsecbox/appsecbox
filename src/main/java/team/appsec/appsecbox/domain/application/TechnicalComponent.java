@@ -22,7 +22,6 @@ public class TechnicalComponent {
 
     @Enumerated(EnumType.STRING)
     private Control.Type type;
-    private String name;
     private String uri;
 
     @ElementCollection(fetch = FetchType.EAGER)
