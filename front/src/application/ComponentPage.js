@@ -2,13 +2,12 @@ import {useEffect, useState} from "react";
 import Api from "../api/Api";
 import TechnicalComponentForm from "../application/TechnicalComponentForm"
 import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
-import ItemsList from "../ui/ItemsList";
 import MetaForm from "../ui/MetaForm";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Breadcrumbs, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import BadgeList from "../ui/BadgeList";
-import ComponentForm from "./ComponentForm";
+import DatasetLinkForm from "./DatasetLinkForm";
 
 const ComponentPage = (props) => {
     const [application, setApplication] = useState(null)
@@ -68,7 +67,7 @@ const ComponentPage = (props) => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <Card>
                         <CardHeader title={"Technical components"} />
                         <CardContent>
@@ -76,6 +75,18 @@ const ComponentPage = (props) => {
                         </CardContent>
                         <CardActions>
                             <TechnicalComponentForm applicationId={applicationId} componentId={componentId}></TechnicalComponentForm>
+                        </CardActions>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <Card>
+                        <CardHeader title={"Datasets"} />
+                        <CardContent>
+                            <BadgeList mapKey={"id"} mapValue={"name"} type={"dataset/"} data={component.datasets}></BadgeList>
+                        </CardContent>
+                        <CardActions>
+                            <DatasetLinkForm defaultValues={component.datasets} applicationId={applicationId} componentId={componentId}></DatasetLinkForm>
                         </CardActions>
                     </Card>
                 </Grid>

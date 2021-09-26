@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import Badge from "./Badge";
-import {DataGrid} from "@mui/x-data-grid"
 
 /**
  *
@@ -18,15 +17,15 @@ const BadgeList = (props) => {
     }, [data, props.getDataPromise, props.data])
 
     if (data != null) {
-        const rows = []
-        data.forEach((item) => {
-            rows.push(<Badge id={item[props.mapKey]} type={props.type} name={item[props.mapValue]}></Badge>)
-        })
 
         return (
             <div>
                 {props.header ? <h4>{props.header}</h4> : ''}
-                {rows.map( (r) => (r) )}
+                {data.map( (item) => (<Badge
+                    key={item[props.mapKey]}
+                    id={item[props.mapKey]}
+                    type={props.type}
+                    name={item[props.mapValue]} />) )}
             </div>
         )
     } else {

@@ -74,6 +74,10 @@ public class TestController {
     List<Control.Type> getControlTypes() {
         return Arrays.asList(Control.Type.values());
     }
+    @GetMapping("/api/dictionary/dataset/category")
+    List<Dataset.Category> getDatasetCategories() {
+        return Arrays.asList(Dataset.Category.values());
+    }
 
     @PostMapping("/api/application/{applicationId}/component/{componentId}/technical-component")
     Application createTechComponent(@RequestBody CreateTechComponentRequest req,
@@ -102,11 +106,11 @@ public class TestController {
         return datasetService.createDataset(request.getName(), request.getSource(), request.getCategories());
     }
 
-    @PutMapping("/api/application/{applicationId}/component/{componentId}/dataset/{datasetId}")
+    @PutMapping("/api/application/{applicationId}/component/{componentId}/dataset")
     Application addDatasetToComponent(@PathVariable(name = "applicationId") UUID applicationId,
                                       @PathVariable(name = "componentId") UUID componentId,
-                                      @PathVariable(name = "datasetId") UUID datasetId) {
-        componentService.addDatasetToComponent(componentId, datasetId);
+                                      @RequestBody AddDatasetToComponentRequest request) {
+        componentService.addDatasetToComponent(componentId, request.getDatasetsIds());
         return applicationService.getApplicationById(applicationId);
     }
 

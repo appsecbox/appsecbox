@@ -28,6 +28,9 @@ class Api {
     static async getControls(){
         return this.request("GET", "/api/dictionary/control/type").then( (response) => {return response.json()} )
     }
+    static async getDatasetCategories(){
+        return this.request("GET", "/api/dictionary/dataset/category").then( (response) => {return response.json()} )
+    }
 
     static async getApplicationById( id ){
         return this.request("GET", "/api/application/"+id).then( (response) => {return response.json()} )
@@ -39,8 +42,8 @@ class Api {
     static async createApplication(name){
         return this.request("POST", "/api/application", name)
     }
-    static async createDataset(name,source){
-        let request = {name:name, source:source, categories:[]}
+    static async createDataset(name,source,categories){
+        let request = {name:name, source:source, categories:categories}
         return this.request("POST", "/api/dataset", JSON.stringify(request))
     }
     static async createComponent(applicationId, name){
@@ -66,6 +69,11 @@ class Api {
     static async createUseCase(applicationId,name,actor,action,componentsIds){
         let request = {name:name, actor:actor, action:action, componentsIds:componentsIds}
         return this.request("POST", "/api/application/"+applicationId+"/use-case", JSON.stringify(request))
+    }
+
+    static async linkDatasetsToComponent(applicationId,componentId,datasetsIds){
+        let request = {datasetsIds:datasetsIds}
+        return this.request("PUT", "/api/application/"+applicationId+"/component/"+componentId+"/dataset", JSON.stringify(request))
     }
 
 

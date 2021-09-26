@@ -10,7 +10,7 @@ public interface ComponentService {
     Component getComponentById(UUID componentId);
     Set<Component> getComponentsByIds(Set<UUID> componentsIds);
     void addTechnicalComponentToComponent(UUID componentId, UUID technicalComponentId);
-    void addDatasetToComponent(UUID componentId, UUID datasetId);
+    void addDatasetToComponent(UUID componentId, Set<UUID> datasetsIds);
     void addMetaToComponent(UUID componentId, String key, String value);
     void removeTechnicalComponentFromComponent(UUID componentId, UUID technicalComponentId);
     void destroyComponent(UUID componentId);

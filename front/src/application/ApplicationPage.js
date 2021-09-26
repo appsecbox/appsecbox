@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import Api from "../api/Api";
 import ComponentForm from "./ComponentForm";
 import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
-import ItemsList from "../ui/ItemsList";
 import MetaForm from "../ui/MetaForm";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Breadcrumbs, Typography} from "@material-ui/core";

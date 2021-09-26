@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import team.appsec.appsecbox.domain.application.*;
 import team.appsec.appsecbox.repository.ComponentRepository;
 import team.appsec.appsecbox.service.ComponentService;
+import team.appsec.appsecbox.service.DatasetService;
 import team.appsec.appsecbox.service.TechnicalComponentService;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,7 @@ public class ComponentServiceImpl implements ComponentService {
 
     private final ComponentRepository componentRepository;
     private final TechnicalComponentService technicalComponentService;
+    private final DatasetService datasetService;
 
     @Transactional
     @Override
@@ -52,8 +54,16 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
-    public void addDatasetToComponent(UUID componentId, UUID datasetId) {
-
+    public void addDatasetToComponent(UUID componentId, Set<UUID> datasetsIds) {
+        Component component = componentRepository.findById(componentId).orElseThrow(ComponentNotFoundException::new);
+        component.setDatasets(
+                datasetsIds.stream()
+                        .map( (id) -> {
+                            return datasetService.getDatasetById(id);
+                        } )
+                        .collect(Collectors.toSet())
+        );
+        componentRepository.save(component);
     }
 
     @Override
