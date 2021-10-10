@@ -1,8 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/appsecbox
-    username: appsecboxuser
-    password: password
+    url: jdbc:h2:mem:appsecboxmem
   flyway:
     enabled: true
   jpa:
@@ -12,7 +10,9 @@ spring:
     show-sql: true
   h2:
     console:
-      enabled: false
+      enabled: true
+      path: /h2
+
 server:
   address: localhost
   port: 9999
