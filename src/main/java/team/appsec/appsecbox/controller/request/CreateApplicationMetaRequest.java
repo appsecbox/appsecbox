@@ -1,4 +1,4 @@
-package team.appsec.appsecbox.controller;
+package team.appsec.appsecbox.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateApplicationMetaRequest {
-    String key;
-    String value;
+    public String key;
+    public String value;
 }

@@ -1,10 +1,9 @@
-package team.appsec.appsecbox.controller;
+package team.appsec.appsecbox.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.EnableMBeanExport;
 import team.appsec.appsecbox.domain.application.Dataset;
 
 import java.util.Set;

@@ -1,4 +1,4 @@
-package team.appsec.appsecbox.controller;
+package team.appsec.appsecbox.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
