@@ -36,3 +36,11 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+def activeProfiles=project.properties['activeProfiles'] ?: ""
+
+processResources {
+	filter org.apache.tools.ant.filters.ReplaceTokens, tokens: [
+			activeProfiles: activeProfiles
+	]
+}

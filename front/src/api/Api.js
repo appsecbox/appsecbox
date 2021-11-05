@@ -35,6 +35,9 @@ class Api {
     static async getApplicationById( id ){
         return this.request("GET", "/api/application/"+id).then( (response) => {return response.json()} )
     }
+    static async getUseCaseById( applicationId, useCaseId ){
+        return this.request("GET", "/api/application/"+applicationId+"/use-case/"+useCaseId).then( (response) => {return response.json()} )
+    }
     static async getComponentById( applicationId, componentId ){
         return this.request("GET", "/api/application/"+applicationId+"/component/"+componentId).then( (response) => {return response.json()} )
     }

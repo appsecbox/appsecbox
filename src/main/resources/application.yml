@@ -13,8 +13,11 @@ spring:
   h2:
     console:
       enabled: false
+  profiles:
+    active: default
+
 server:
-  address: localhost
+  address: 192.168.56.5
   port: 9999
 
 logging:

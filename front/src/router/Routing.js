@@ -6,11 +6,13 @@ import ApplicationForm from "../application/ApplicationForm";
 import ApplicationPage from "../application/ApplicationPage";
 import DatasetForm from "../application/DatasetForm";
 import ComponentPage from "../application/ComponentPage";
+import UseCasePage from "../application/UseCasePage";
 
 const Routing = () => (
     <Switch>
         <Route exact path={"/application/:id"} component={ApplicationPage}/>
-        <Route exact path={"/application/:applicationId/component/:componentId"} component={ComponentPage}/>
+            <Route exact path={"/application/:applicationId/component/:componentId"} component={ComponentPage}/>
+            <Route exact path={"/application/:applicationId/use-case/:useCaseId"} component={UseCasePage}/>
 
         <Route exact path={"/application"} render={(props) => (
             <span>

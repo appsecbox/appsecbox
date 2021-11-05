@@ -14,7 +14,7 @@ spring:
       path: /h2
 
 server:
-  address: localhost
+  address: 192.168.56.5
   port: 9999
 
 logging:

@@ -2,10 +2,7 @@ package team.appsec.appsecbox.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.appsec.appsecbox.controller.request.CreateUseCaseRequest;
 import team.appsec.appsecbox.domain.application.Application;
 import team.appsec.appsecbox.domain.application.UseCase;
@@ -26,5 +23,13 @@ public class UseCaseController {
         UseCase useCase = useCaseService.createUseCase(request.getName(), request.getActor(), request.getAction(), request.getComponentsIds());
         applicationService.addUseCaseToApplication(applicationId, useCase.getId());
         return applicationService.getApplicationById(applicationId);
+    }
+
+    @GetMapping("/api/application/{applicationId}/use-case/{useCaseId}")
+    UseCase getUseCase(
+            @PathVariable(name = "applicationId") UUID applicationId,
+            @PathVariable(name = "useCaseId") UUID useCaseId
+    ) {
+        return useCaseService.getById(useCaseId);
     }
 }
